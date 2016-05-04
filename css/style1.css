@@ -1,0 +1,95 @@
+@charset "UTF-8";
+/* CSS Document */
+html, body {
+    margin: 0;
+    margin: 0;
+    padding: 0;
+}
+
+#map {
+    height: 100vh;
+    background-color: #CCC;
+}
+
+.sidebar {
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    background-color: rgba(53, 70, 158, 0.67);
+    color: #fff;
+    width: 300px;
+    bottom: 0px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.sidebar .place-item {
+    padding: 4px;
+    font-size: 17px;
+    font-family: sans-serif;
+    border-bottom: 1px solid #aaa;
+    padding-right: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 89%;
+    text-overflow: ellipsis;
+}
+
+.sidebar .place-item:hover {
+    background-color: #66A3CF;
+}
+
+.sidebar .place-item .rating {
+    right: 21px;
+    display: inline-block;
+    position: absolute;
+    font-size: 12px;
+    border-radius: 50%;
+    background-color: rgb(255, 240, 29);
+    color: #111;
+    padding: 2px;
+    width: 17px;
+    height: 17px;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.searchbar {
+    position: absolute;
+    top: 0px;
+    left: 420px;
+    background-color: rgba(53, 70, 158, 0.67);
+    color: #fff;
+    width: 200px;
+    padding: 20px;
+}
+
+.image-box {
+    position: absolute;
+    height: 150px;
+    overflow: hidden;
+    /* width: 10000px; */
+    bottom: 0px;
+    left: 340px;
+}
+
+.notify {
+    display: none;
+    position: absolute;
+    top: 68px;
+    left: 45%;
+    width: 200px;
+    background: #FFF8D0;
+    padding: 5px 20px;
+    border-radius: 5px;
+    border: 1px solid #888;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.55);
+}
+
+.notify.ok {
+    background: #CDFFD2;
+}
+
+.notify.error {
+    background: #FFCBCB;
+}
