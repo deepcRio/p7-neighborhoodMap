@@ -5,9 +5,10 @@
     Spreading To The Global Scope.
 */
 (function(root) {
-    'use scrict';
+    'use strict';
 
-    // Object for Storing Error Message		
+    // Object for Storing Error Message
+	// decided not to use KO, in order to minimize use of libraries		
     var Notice = {
         notice: function(msg, type) {
             $('.notify').removeClass('ok').removeClass('error');
@@ -56,17 +57,19 @@
             },
             getImages: function(tag, callback) {
                 // ajax call get information from Third Party - Instamgram
-                $.ajax({
+                var xhr = $.ajax({
                     url: ImageGallery.tags(tag),
                     cache: true,
-                    dataType: 'jsonp',
-                    success: function(response, status) {
-                        callback(response.data, status);
-                    },
-                    error: function(e) {
-                        Notice.error("");
-                    }
-                });
+                    dataType: 'jsonp'
+                })
+				// v2- done callback added 
+				.done(function(response, status) {
+					callback(response.data, status);
+				})
+				.fail(function(e) {
+                    Notice.error("Could't load images from Instagram");
+				});
+				
             }
         };
 
@@ -80,6 +83,18 @@
         var PlaceModel = {
             // Initialize the Search with an emptry String
             search: ko.observable(''),
+			
+			showHideSidebar: ko.observable(true),
+			
+			toggleSidebar: function() {
+				console.log(PlaceModel.showHideSidebar());
+				
+				if (PlaceModel.showHideSidebar())
+					PlaceModel.showHideSidebar(false);
+				else
+					PlaceModel.showHideSidebar(true);
+					
+			},
 
             placesBackUp: [],
 
@@ -91,13 +106,13 @@
                     var search = new RegExp(PlaceModel.search(), "i");
 
                     /*
-            If the Search has no data
-            Make all results available
-        */
+						If the Search has no data
+						Make all results available
+					*/
                     if (search.test(place.name)) {
-                        place.visible(true);
+                        place.setVisible(true);
                     } else {
-                        place.visible(false);
+                        place.setVisible(false);
                     }
                 }
             },
@@ -125,6 +140,11 @@
                 var marker = appMap.markerList(this);
 
                 this.marker = marker;
+				
+				this.setVisible = function( state ) {
+					this.visible(state);
+					this.marker.setVisible(state);
+				}
 
                 var openClosed = (obj.opening_hours && obj.opening_hours.open_now) ? "Open" : "Closed";
 
@@ -199,8 +219,6 @@
         // Controller
         var LocationController = function LocationController() {
             console.log("Controller Loction started...");
-
-            var map = appMap.init();
 
             appMap.getPlaces(function(results, status) {
                 PlaceModel.import(results);

@@ -1,7 +1,7 @@
 // JavaScript Document
 // map.js
 (function(root) {
-    'use scrict';
+    'use strict';
 
     var appMap = {};
 
