@@ -29,14 +29,17 @@
             Notice.notice(msg, 'error');
         }
     };
+
     // error catching
     try {
-        google.maps;
         ko.observable();
 
-        app();
+        appMap.onLoad(app, function error() {
+            Notice.error("There was problem loading the Google Map, please check your internet.");
+        })
+        // app();
     } catch (e) {
-        Notice.error("There was problem loading the Google Map, please check your internet.");
+        Notice.error("There was problem loading an external library, please check your internet.");
         // fade out side bar and search bar if error
         $('.sidebar, .searchbar').fadeOut(200);
     }
@@ -218,7 +221,7 @@
 
         // Controller
         var LocationController = function LocationController() {
-            console.log("Controller Loction started...");
+            console.log("Controller Location started...");
 
             appMap.getPlaces(function(results, status) {
                 PlaceModel.import(results);

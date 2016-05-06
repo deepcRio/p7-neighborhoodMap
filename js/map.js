@@ -10,6 +10,26 @@
         lng: -43.204444
     };
 
+    var onLoad = function() {};
+    var onError = function() {};
+
+    appMap.onLoad = function( success, error ) {
+        onLoad = success;
+        onError = error;
+
+        return appMap;
+    };
+
+    appMap.load = function(ev) {
+        // we pass the event ev, so we can check if the event is an ErrorEvent
+        // we check if the map was succesfully loaded (just check the appMap.map)
+        if (appMap.map) {
+            onLoad.call(appMap);
+        } else {
+            onError.call(appMap, ev);
+        }
+    };
+
     /*
         Utility For Initializing The Google Map
         Needs To Be Global
@@ -19,7 +39,7 @@
 
         /*
             Instantiate a new map object
-    */
+        */
         appMap.map = new google.maps.Map(mapDiv, {
             center: startPoint,
             zoom: 15

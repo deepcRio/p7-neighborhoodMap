@@ -55,9 +55,9 @@
     <!-- Load Scripts last -->
     <script src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/map.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=appMap.init" async defer></script>
     <script type="text/javascript" src="http://knockoutjs.com/downloads/knockout-3.3.0.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?libraries=places&callback=appMap.init" async defer onload="appMap.load(event)" onerror="appMap.load(event)"></script>
 
 
 </body>
