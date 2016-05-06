@@ -25,6 +25,7 @@ html, body {
 
 .sidebar-content {
     overflow-y: auto;
+    height: 100%;
 }
 
 .sidebar .place-item {
@@ -38,6 +39,7 @@ html, body {
     width: 89%;
     text-overflow: ellipsis;	
 	transition: 0.3s ease-in-out;
+    position: relative;
 }
 
 .sidebar .place-item:hover {
@@ -45,7 +47,7 @@ html, body {
 }
 
 .sidebar .place-item .rating {
-    right: 21px;
+    right: 3px;
     display: inline-block;
     position: absolute;
     font-size: 12px;
