@@ -21,10 +21,12 @@ html, body {
     padding: 20px;
 	/* v1- create transition effect */
 	transition: 1s ease-in-out;
+    z-index: 10;
 }
 
 .sidebar-content {
     overflow-y: auto;
+    height: 88%;
 }
 
 .sidebar .place-item {
@@ -38,6 +40,7 @@ html, body {
     width: 89%;
     text-overflow: ellipsis;	
 	transition: 0.3s ease-in-out;
+    position: relative;
 }
 
 .sidebar .place-item:hover {
@@ -45,7 +48,7 @@ html, body {
 }
 
 .sidebar .place-item .rating {
-    right: 21px;
+    right: 3px;
     display: inline-block;
     position: absolute;
     font-size: 12px;
@@ -65,8 +68,12 @@ html, body {
     left: 420px;
     background-color: rgba(53, 70, 158, 0.67);
     color: #fff;
-    width: 200px;
+    width: 230px;
     padding: 20px;
+}
+
+.searchbar input {
+    width: 137px;
 }
 
 .image-box {
@@ -112,6 +119,7 @@ width: 34px;
     background-repeat: no-repeat;
     background-position: center;
 	transition: 1s ease-in-out;
+    z-index: 12;
 }
 .sidebar-toggle.show-sidebar {
 	left: 320px;
@@ -128,6 +136,9 @@ width: 34px;
 	.sidebar {
 		left: -340px;
 	}
+    .sidebar .place-item {
+        font-size: 14px;
+    }
 	
 	.searchbar {
 		background-color: transparent;
@@ -135,4 +146,28 @@ width: 34px;
 		position:relative;
 		left: 0;
 		top: 0;
+    }
+
+    .image-box {
+        left: 0;
+        height: 100px;
+    }
+}
+@media (max-width:500px) {
+    .sidebar {
+        width: 260px;
+    }
+    .sidebar .place-item {
+        font-size: 12px;
+    }
+    .sidebar .place-item .rating {
+        top: 2px;
+        font-size: 10px;
+        width: 14px;
+        height: 14px;
+    }
+
+    .sidebar-toggle.show-sidebar {
+        left: 260px;
+    }
 }
