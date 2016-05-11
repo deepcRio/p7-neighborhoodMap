@@ -8,7 +8,7 @@
     'use strict';
 
     // Object for Storing Error Message
-	// decided not to use KO, in order to minimize use of libraries		
+    // decided not to use KO, in order to minimize use of libraries		
     var Notice = {
         notice: function(msg, type) {
             $('.notify').removeClass('ok').removeClass('error');
@@ -27,6 +27,9 @@
         },
         error: function(msg) {
             Notice.notice(msg, 'error');
+        },
+        info: function(msg) {
+            Notice.notice(msg, 'info');
         }
     };
 
@@ -35,11 +38,13 @@
         ko.observable();
 
         appMap.onLoad(app, function error() {
-            Notice.error("There was problem loading the Google Map, please check your internet.");
-        })
-        // app();
+                Notice.error("There was problem loading the Google Map," +
+                    "please check your internet.");
+            })
+            // app();
     } catch (e) {
-        Notice.error("There was problem loading an external library, please check your internet.");
+        Notice.error("There was problem loading an external library," +
+            "please check your internet.");
         // fade out side bar and search bar if error
         $('.sidebar, .searchbar').fadeOut(200);
     }
@@ -55,24 +60,43 @@
         Search By "tagName"
     */
         var ImageGallery = {
+            Image: function(obj) {
+                $.extend(obj, {
+                    thumbnail: {}
+                });
+                $.extend(obj.caption, {
+                    text: ""
+                });
+                $.extend(obj.caption.from, {
+                    full_name: ""
+                });
+
+                $.extend(this, obj);
+            },
             tags: function(tagName) {
                 return "https://api.instagram.com/v1/tags/" + tagName + "/media/recent?access_token=35376971.52c688d.7841812059474470834c3b5dbbd5bfa8";
             },
             getImages: function(tag, callback) {
                 // ajax call get information from Third Party - Instamgram
                 var xhr = $.ajax({
-                    url: ImageGallery.tags(tag),
-                    cache: true,
-                    dataType: 'jsonp'
-                })
-				// v2- done callback added 
-				.done(function(response, status) {
-					callback(response.data, status);
-				})
-				.fail(function(e) {
-                    Notice.error("Could't load images from Instagram");
-				});
-				
+                        url: ImageGallery.tags(tag),
+                        cache: true,
+                        dataType: 'jsonp',
+                        // v3 - added 10 sec. timeout
+                        timeout: 10000
+                    })
+                    // v2- done callback added 
+                    .done(function(response, status) {
+                        var data = [];
+                        $.each(response.data, function(index, img) {
+                            data.push(new ImageGallery.Image(img));
+                        });
+                        callback(data, status);
+                    })
+                    .fail(function(e) {
+                        Notice.error("Could't load images from Instagram");
+                    });
+
             }
         };
 
@@ -86,18 +110,18 @@
         var PlaceModel = {
             // Initialize the Search with an emptry String
             search: ko.observable(''),
-			
-			showHideSidebar: ko.observable(true),
-			
-			toggleSidebar: function() {
-				console.log(PlaceModel.showHideSidebar());
-				
-				if (PlaceModel.showHideSidebar())
-					PlaceModel.showHideSidebar(false);
-				else
-					PlaceModel.showHideSidebar(true);
-					
-			},
+
+            showHideSidebar: ko.observable(true),
+
+            toggleSidebar: function() {
+                console.log(PlaceModel.showHideSidebar());
+
+                if (PlaceModel.showHideSidebar())
+                    PlaceModel.showHideSidebar(false);
+                else
+                    PlaceModel.showHideSidebar(true);
+
+            },
 
             placesBackUp: [],
 
@@ -143,11 +167,11 @@
                 var marker = appMap.markerList(this);
 
                 this.marker = marker;
-				
-				this.setVisible = function( state ) {
-					this.visible(state);
-					this.marker.setVisible(state);
-				}
+
+                this.setVisible = function(state) {
+                    this.visible(state);
+                    this.marker.setVisible(state);
+                }
 
                 var openClosed = (obj.opening_hours && obj.opening_hours.open_now) ? "Open" : "Closed";
 
@@ -184,6 +208,10 @@
 
                         ImageGallery.getImages(tag, function(data) {
                             this.images = data;
+                            // v3- if we can not find Instagram images, user will be notified	
+                            if (!data.length) {
+                                Notify.info("We couldn't find any image in Instagram");
+                            }
 
                             PlaceModel.selectedPlaceImages(this.images);
                         }.bind(this));
@@ -225,7 +253,7 @@
 
             appMap.getPlaces(function(results, status) {
                 PlaceModel.import(results);
-                console.log(PlaceModel.places); // to see the location objects
+                // console.log(PlaceModel.places()); // to see the location objects
 
                 ko.applyBindings(PlaceModel);
             });

@@ -13,7 +13,7 @@
     var onLoad = function() {};
     var onError = function() {};
 
-    appMap.onLoad = function( success, error ) {
+    appMap.onLoad = function(success, error) {
         onLoad = success;
         onError = error;
 

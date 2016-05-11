@@ -1,11 +1,12 @@
 /* css document */
-html, body {
+html, 
+body {
     margin: 0;
     margin: 0;
     padding: 0;
 }
 
-#map {
+.my-map {
     height: 100vh;
     background-color: #CCC;
 }
@@ -20,7 +21,7 @@ html, body {
     bottom: 0;
     padding: 20px;
 	/* v1- create transition effect */
-	transition: 1s ease-in-out;
+    transition: 1s ease-in-out;
     z-index: 10;
 }
 
@@ -38,8 +39,8 @@ html, body {
     white-space: nowrap;
     overflow: hidden;
     width: 89%;
-    text-overflow: ellipsis;	
-	transition: 0.3s ease-in-out;
+    text-overflow: ellipsis;
+    transition: 0.3s ease-in-out;
     position: relative;
 }
 
@@ -72,7 +73,7 @@ html, body {
     padding: 20px;
 }
 
-.searchbar input {
+.searchbar .search-field {
     width: 137px;
 }
 
@@ -96,7 +97,7 @@ html, body {
     border-radius: 5px;
     border: 1px solid #888;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.55);
-	z-index:1000;
+    z-index: 1000;
 }
 
 .notify.ok {
@@ -106,10 +107,15 @@ html, body {
 .notify.error {
     background: #FFCBCB;
 }
+
+.notify.info {
+    background: #9DD2EE;
+}
+
 /* v2- add toggle to move sidebar in and out */
 .sidebar-toggle {
-	background-image: url(https://d3u3u7bjn61hwm.cloudfront.net//images/icon-settings-gray-9d522.svg);
-width: 34px;
+    background-image: url(https://d3u3u7bjn61hwm.cloudfront.net//images/icon-settings-gray-9d522.svg);
+    width: 34px;
     height: 34px;
     background-color: rgba(46, 61, 73, 0.61);
     border-radius: 50%;
@@ -118,48 +124,53 @@ width: 34px;
     left: 10px;
     background-repeat: no-repeat;
     background-position: center;
-	transition: 1s ease-in-out;
+    transition: 1s ease-in-out;
     z-index: 12;
 }
+
 .sidebar-toggle.show-sidebar {
-	left: 320px;
+    left: 320px;
 }
 
 /* v2 - disappear sidebar */
 .sidebar.show-sidebar {
-	left: 0;
+    left: 0;
 }
 
 
 /* v2-media max-width method. hides the sidebar < 700px */
 @media (max-width:700px) {
-	.sidebar {
-		left: -340px;
-	}
+    .sidebar {
+        left: -340px;
+    }
+
     .sidebar .place-item {
         font-size: 14px;
     }
-	
-	.searchbar {
-		background-color: transparent;
-		padding: 5px 10px;
-		position:relative;
-		left: 0;
-		top: 0;
+
+    .searchbar {
+        background-color: transparent;
+        padding: 5px 10px;
+        position: relative;
+        left: 0;
+        top: 0;
     }
 
     .image-box {
         left: 0;
         height: 100px;
-    }
+    };
 }
+
 @media (max-width:500px) {
     .sidebar {
         width: 260px;
     }
+
     .sidebar .place-item {
         font-size: 12px;
     }
+
     .sidebar .place-item .rating {
         top: 2px;
         font-size: 10px;
@@ -169,5 +180,5 @@ width: 34px;
 
     .sidebar-toggle.show-sidebar {
         left: 260px;
-    }
+    };
 }

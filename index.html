@@ -4,25 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Neighborhood App</title>
-    <link rel="stylesheet" type="text/css" href="css/style1.css">
-	
+    <link rel="stylesheet" href="css/style1.css">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-    <div id="map"></div>
+    <div id="map" class="my-map"></div>
 
     <div class="ui-wrapper">
         <div class="sidebar" data-bind="css: {'show-sidebar': showHideSidebar}">
 
             <div class="searchbar">
                 <div class="searchbar-content">
-               <!-- v2- added textInput to search field limit --> 
-                   <input type="text" name="search-field" data-bind="textInput: search, event: {keyup: doSearch}" />
+                    <!-- v3- added PlaceHolder & added textInput to search field limit -->
+                    <input class="search-field" type="text" name="search-field" placeholder="Type to search" data-bind="textInput: search, event: {keyup: doSearch}" />
                     <button class="btn" data-bind="click: doSearch">SEARCH</button>
                 </div>
             </div>
-        
+
             <div class="sidebar-content">
                 <div class="title">PLACES</div>
 
@@ -37,7 +37,8 @@
 
         <div class="image-gallery">
             <div class="image-box" data-bind="foreach: selectedPlaceImages">
-                <img data-bind="attr: { src: images.thumbnail.url }" height="150" alt="Image Gallery" />
+                <!-- v3- added title for credit of images -->
+                <img data-bind="attr: { src: images.thumbnail.url, alt: caption.text, title: 'by '+caption.from.full_name }" height="150" />
             </div>
         </div>
 
@@ -48,15 +49,15 @@
         <div class="notify-text">
         </div>
     </div>
-    
+
     <!-- v2 - added sidebar toggle -->
     <div class="sidebar-toggle" data-bind="click: toggleSidebar, css: {'show-sidebar': showHideSidebar}"></div>
 
     <!-- Load Scripts last -->
     <script src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/map.js"></script>
-    <script type="text/javascript" src="http://knockoutjs.com/downloads/knockout-3.3.0.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
+    <script src="js/map.js"></script>
+    <script src="http://knockoutjs.com/downloads/knockout-3.3.0.js"></script>
+    <script src="js/app.js"></script>
     <script src="http://maps.googleapis.com/maps/api/js?libraries=places&callback=appMap.init" async defer onload="appMap.load(event)" onerror="appMap.load(event)"></script>
 
 
